@@ -21,7 +21,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
 
     // 게시글에 달린 댓글 일괄 삭제
-    @Modifying
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("DELETE FROM Comment c WHERE c.article.id = :articleId")
     void deleteAllByArticleId(@Param("articleId") Long articleId);
 }
