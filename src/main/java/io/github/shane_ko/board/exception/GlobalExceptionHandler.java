@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Fallback;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -94,6 +95,25 @@ public class GlobalExceptionHandler {
                 fieldErrors
         );
         return ResponseEntity.status(ErrorCode.INVALID_INPUT_VALUE.getStatus()).body(response);
+    }
+
+    // 요청 본문(JSON) 파싱 실패 (400)
+    // @Valid 검증보다 앞 단계(JSON → DTO 변환)에서 발생하므로 별도 처리
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handlerNotReadable(
+            HttpMessageNotReadableException e,
+            HttpServletRequest request) {
+
+        // 원인 메시지는 로그에만 남기고 응답에는 노출하지 않음 (내부 정보 보호)
+        log.warn("[NotReadable] {} - path: {}", e.getMessage(), request.getRequestURI());
+
+        ErrorResponse response = ErrorResponse.of(
+                ErrorCode.INVALID_REQUEST_BODY,
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(ErrorCode.INVALID_REQUEST_BODY.getStatus())
+                .body(response);
     }
 
     // 중복 아이디 오류 (409)
