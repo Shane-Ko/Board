@@ -20,9 +20,9 @@ public enum ErrorCode {
     INVALID_CREDENTIALS(HttpStatus.UNAUTHORIZED,"아이디 또는 비밀번호가 일치하지 않습니다"),
     // 존재하지 않는 사용자 조회 예외
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 사용자를 찾을 수 없습니다."),
-    // 인가 실패 예외 (Authentication)
+    // 인가 실패 예외 (Authorization) - 로그인은 했지만 권한 없음 (403)
     FORBIDDEN(HttpStatus.FORBIDDEN,"접근 권한이 없습니다"),
-    // 인증 실패 예외 (Authorization)
+    // 인증 실패 예외 (Authentication) - 누구인지 확인 불가 (401)
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "인증이 필요합니다.");
 
     private final HttpStatus status;
