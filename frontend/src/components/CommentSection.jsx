@@ -125,6 +125,7 @@ export default function CommentSection({ articleId, onNotify, onConfirm }) {
               value={editingText}
               onChange={(e) => setEditingText(e.target.value)}
               style={{ marginTop: 8 }}
+
             />
           ) : (
             <div className="comment-body">{c.content}</div>
@@ -134,7 +135,7 @@ export default function CommentSection({ articleId, onNotify, onConfirm }) {
 
       <form className="comment-form" onSubmit={handleCreate}>
         <textarea
-          rows={2}
+          rows={8}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder={isLoggedIn ? '댓글을 입력하세요' : '로그인 후 댓글을 작성할 수 있습니다'}
