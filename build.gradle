@@ -49,3 +49,7 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.13.0'
 
 }
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
