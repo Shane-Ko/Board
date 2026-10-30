@@ -49,7 +49,7 @@ public class ArticleService {
 
     //ReadAll
     public List<Article> findAll() {
-        return articleRepository.findAll();
+        return articleRepository.findAllWithMember();
     }
 
     @Transactional
