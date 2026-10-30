@@ -9,6 +9,7 @@ import io.github.shane_ko.board.exception.ArticleNotFoundException;
 import io.github.shane_ko.board.exception.ForbiddenException;
 import io.github.shane_ko.board.exception.MemberNotFoundException;
 import io.github.shane_ko.board.repository.ArticleRepository;
+import io.github.shane_ko.board.repository.CommentRepository;
 import io.github.shane_ko.board.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ public class ArticleService {
 
     private final ArticleRepository articleRepository;
     private final MemberRepository memberRepository;
+    private final CommentRepository commentRepository;
 
 
     // Create
@@ -85,6 +87,7 @@ public class ArticleService {
             throw new ForbiddenException();
         }
 
+        commentRepository.deleteAllByArticleId(target.getId());
         articleRepository.deleteById(target.getId());
         log.info(id + "번 게시글 삭제성공");
     }
