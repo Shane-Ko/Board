@@ -33,7 +33,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         // 1. 헤더에서 값 꺼내기
         String authHeader = request.getHeader("Authorization");
-        log.info("[JwtFilter] Authorization = {}", authHeader);
 
         // 2. Bearer 체크
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
